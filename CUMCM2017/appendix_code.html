@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="highlight/styles/default.css">
+    <script src="highlight/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+</head>
+<body>
+<h1>
+    Appendix - codes
+</h1>
+<h2>
+    Ferris Wheel
+</h2>
+<h4>
+    1.
+</h4>
+<pre><code class="matlab">
+% initialize data set
+xs = [];
+ys = [];
+zs = [];
+
+xs2 = [];
+ys2 = [];
+zs2 = [];
+
+% create 10X10 square
+initDistance = 0.2;
+index = 1;
+j = 1;
+k = 1;
+while j < 11
+    index = index + 1;
+    xs2(index) = -1;
+    ys2(index) = -1.2 + 0.2 * j;
+    zs2(index) = 0;
+    while k < 10
+        index = index + 1;
+        xs2(index) = xs2(index-1) + initDistance;
+        ys2(index) = j*initDistance - 1-initDistance;
+        zs2(index) = 0;
+        k = k + 1;
+    end
+    k = 1;
+    j = j + 1;
+end
+
+distance = 0.1532;
+number = 100;
+varT = (2*pi)/number;
+theta = 0;
+varX1 = theta;
+varX2 = theta;
+i = 1;
+r = ((number-1)*distance)/2*pi;
+x = 0;
+y = 20;
+while theta < pi
+        varX1 = r*cos(theta);
+        varX2 = r*cos(theta+varT);
+        theta = theta + varT;
+        ys(i) = (0.5*sqrt(r*r - varX1*varX1))*(1/sqrt(2));
+        xs(i) = varX1+x;
+        zs(i) = (0.5*sqrt(r*r - varX1*varX1))*((1/sqrt(2)))+y;
+        i = i + 1;
+        ys(i) = -(0.5*sqrt(r*r - varX2*varX2))*(1/sqrt(2));
+        xs(i) = varX2+x;
+        zs(i) = -(0.5*sqrt(r*r - varX2*varX2))*((1/sqrt(2)))+y;
+
+        i = i + 1;
+end
+
+
+
+xs2([1]) = [];
+ys2([1]) = [];
+zs2([1]) = [];
+
+length(xs)
+
+hold on
+xlabel('x(10m)')
+ylabel('y(10m)')
+zlabel('z(10m)')
+scatter3(xs,ys,zs);
+scatter3(xs2,ys2,zs2);
+axis([-40 40 -40 40 0 40])
+hold off
+
+
+sepResult = [];
+i = 1;
+j = 1;
+index = 1;
+hold on
+xlabel('x(10m)')
+ylabel('y(10m)')
+zlabel('z(10m)')
+scatter3(xs,ys,zs);
+scatter3(xs2,ys2,zs2);
+axis([-40 40 -40 40 0 40])
+while i <= 25
+    j = 1;
+    while j <= 25
+        if (i ~= 1) && sepResult(j) == 40
+            j = j + 1;
+        else
+            sepResult(j) = sqrt((-(xsSepInit(i)) + (xsSepEnd(j))));
+            j = j + 1;
+        end
+    end
+    [maxr,index] = min(sepResult);
+    plot3([xsSepInit(i) xsSepEnd(index)],[ysSepInit(i) ysSepEnd(index)],[zsSepInit(i) zsSepEnd(index)]);
+    sepResult(index) = 40;
+    i = i + 1;
+end
+hold off
+</code></pre>
+<h4>
+    2.
+</h4>
+<pre><code>
+    % initialize data set
+xs = [];
+ys = [];
+zs = [];
+
+xs2 = [];
+ys2 = [];
+zs2 = [];
+
+% create 10X10 square
+initDistance = 0.2;
+index = 1;
+j = 1;
+k = 1;
+while j < 11
+    index = index + 1;
+    xs2(index) = -1;
+    ys2(index) = -1.2 + 0.2 * j;
+    zs2(index) = 0;
+    while k < 10
+        index = index + 1;
+        xs2(index) = xs2(index-1) + initDistance;
+        ys2(index) = j*initDistance - 1-initDistance;
+        zs2(index) = 0;
+        k = k + 1;
+    end
+    k = 1;
+    j = j + 1;
+end
+
+distance = 0.1532;
+number = 100;
+varT = (2*pi)/number;
+theta = 0;
+varX1 = theta;
+varX2 = theta;
+i = 1;
+r = ((number)*distance)/2*pi;
+x = 0;
+y = 20;
+while theta < pi
+        varX1 = r*cos(theta);
+        varX2 = r*cos(theta+varT);
+        theta = theta + varT;
+        ys(i) = (sqrt(r*r - varX1*varX1))*(1/sqrt(2));
+        xs(i) = varX1+x;
+        zs(i) = (sqrt(r*r - varX1*varX1))*((1/sqrt(2)))+y;
+        i = i + 1;
+        ys(i) = -(sqrt(r*r - varX2*varX2))*(1/sqrt(2));
+        xs(i) = varX2+x;
+        zs(i) = -(sqrt(r*r - varX2*varX2))*((1/sqrt(2)))+y;
+
+        i = i + 1;
+end
+
+xsL = [0];
+ysL = [0];
+zsL = [20];
+varX = 0.5;
+i = 1;
+while i <= 50
+    xsL(i) = varX*0.5;
+    ysL(i) = -sqrt(3)*varX*((1/sqrt(2)));
+    zsL(i) = -sqrt(3)*varX*((1/sqrt(2)))+y;
+    varX = varX + 0.5;
+    i = i + 1;
+end
+
+xsL2 = [0];
+ysL2 = [0];
+zsL2 = [20];
+varX = 0.5;
+i = 1;
+while i <= 50
+    xsL2(i) = -varX*0.5;
+    ysL2(i) = -sqrt(3)*varX*((1/sqrt(2)));
+    zsL2(i) = -sqrt(3)*varX*((1/sqrt(2)))+y;
+    varX = varX + 0.5;
+    i = i + 1;
+end
+
+
+
+
+xs2([1]) = [];
+ys2([1]) = [];
+zs2([1]) = [];
+
+
+
+distance = 0.1532;
+number = 25;
+varT = (2*pi)/number;
+theta = 0;
+varX1 = theta;
+varX2 = theta;
+i = 1;
+r = ((number)*distance)/2*pi;
+x = 0;
+y = 20;
+while theta < pi
+        varX1 = r*cos(theta);
+        varX2 = r*cos(theta+varT);
+        theta = theta + varT;
+        ysS(i) = (sqrt(r*r - varX1*varX1))*(1/sqrt(2));
+        xsS(i) = varX1+x;
+        zsS(i) = (sqrt(r*r - varX1*varX1))*((1/sqrt(2)))+y;
+        i = i + 1;
+        ysS(i) = -(sqrt(r*r - varX2*varX2))*(1/sqrt(2));
+        xsS(i) = varX2+x;
+        zsS(i) = -(sqrt(r*r - varX2*varX2))*((1/sqrt(2)))+y;
+
+        i = i + 1;
+end
+
+
+xsSepInit1 = [];
+ysSepInit1 = [];
+zsSepInit1 = [];
+i = 5;
+j = 1;
+while j <= 25
+    xsSepInit1(j) = xs2(i);
+    ysSepInit1(j) = ys2(i);
+    zsSepInit1(j) = zs2(i);
+    if mod(j,5) == 0
+        i = i + 15;
+    end
+    i = i - 1;
+    j = j + 1;
+
+end
+
+
+xsSepEnd1 = [];
+ysSepEnd1 = [];
+zsSepEnd1 = [];
+i = 1;
+j = 1;
+while i <= 100
+    if ys(i) < 0 && xs(i) < 0
+        xsSepEnd1(j) = xs(i);
+        ysSepEnd1(j) = ys(i);
+        zsSepEnd1(j) = zs(i);
+        j = j + 1;
+    end
+    i = i + 1;
+end
+
+sepResult = [];
+i = 1;
+j = 1;
+index = 1;
+hold on
+grid on
+xlabel('x(10m)')
+ylabel('y(10m)')
+zlabel('z(10m)')
+scatter3(xs,ys,zs);
+scatter3(xs2,ys2,zs2);
+scatter3(xsS,ysS,zsS);
+scatter3(xsL,ysL,zsL);
+scatter3(xsL2,ysL2,zsL2);
+axis([-40 40 -40 40 0 40])
+while i <= 25
+    j = 1;
+    while j <= 25
+        if (i ~= 1) && sepResult(j) == 40
+            j = j + 1;
+        else
+            sepResult(j) = sqrt((-(xsSepInit1(i)) + (xsSepEnd1(j))));
+            j = j + 1;
+        end
+    end
+    [maxr,index] = min(sepResult);
+%      plot3([xsSepInit1(i) xsSepEnd1(index)],[ysSepInit1(i) ysSepEnd1(index)],[zsSepInit1(i) zsSepEnd1(index)]);
+    sepResult(index) = 40;
+    i = i + 1;
+end
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+xsSepInit2 = [];
+ysSepInit2 = [];
+zsSepInit2 = [];
+i = 6;
+j = 1;
+while j <= 25
+    xsSepInit2(j) = xs2(i);
+    ysSepInit2(j) = ys2(i);
+    zsSepInit2(j) = zs2(i);
+    if mod(j,5) == 0
+        i = i + 5;
+    end
+    i = i + 1;
+    j = j + 1;
+
+end
+
+
+
+xsSepEnd2 = [];
+ysSepEnd2 = [];
+zsSepEnd2 = [];
+i = 1;
+j = 1;
+while i <= 100
+    if ys(i) <= 0 && xs(i) > 0
+        xsSepEnd2(j) = xs(i);
+        ysSepEnd2(j) = ys(i);
+        zsSepEnd2(j) = zs(i);
+        j = j + 1;
+    end
+    i = i + 1;
+end
+
+
+
+sepResult2 = [];
+i = 1;
+j = 1;
+index = 1;
+
+while i <= 25
+    j = 1;
+    while j <= 25
+        if (i ~= 1) && sepResult2(j) == 40
+            j = j + 1;
+        else
+            sepResult2(j) = sqrt((-(xsSepInit2(i)) + (xsSepEnd2(j))));
+            j = j + 1;
+        end
+    end
+    [maxr,index] = min(sepResult2);
+%     plot3([xsSepInit2(i) xsSepEnd2(index)],[ysSepInit2(i) ysSepEnd2(index)],[zsSepInit2(i) zsSepEnd2(index)]);
+    sepResult2(index) = 40;
+    i = i + 1;
+end
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+xsSepInit3 = [];
+ysSepInit3 = [];
+zsSepInit3 = [];
+i = 95;
+j = 1;
+while j <= 25
+    xsSepInit3(j) = xs2(i);
+    ysSepInit3(j) = ys2(i);
+    zsSepInit3(j) = zs2(i);
+    if mod(j,5) == 0
+        i = i - 5;
+    end
+    i = i - 1;
+    j = j + 1;
+
+end
+
+
+
+xsSepEnd3 = [];
+ysSepEnd3 = [];
+zsSepEnd3 = [];
+i = 1;
+j = 1;
+while i <= 100
+    if ys(i) > 0 && xs(i) < 0
+        xsSepEnd3(j) = xs(i);
+        ysSepEnd3(j) = ys(i);
+        zsSepEnd3(j) = zs(i);
+        j = j + 1;
+    end
+    i = i + 1;
+end
+
+
+
+sepResult3 = [];
+i = 1;
+j = 1;
+index = 1;
+
+while i <= 25
+    j = 1;
+    while j <= 25
+        if (i ~= 1) && sepResult3(j) == 40
+            j = j + 1;
+        else
+            sepResult3(j) = sqrt((-(xsSepInit3(i)) + (xsSepEnd3(j))));
+            j = j + 1;
+        end
+    end
+    [maxr,index] = min(sepResult3);
+%      plot3([xsSepInit3(i) xsSepEnd3(index)],[ysSepInit3(i) ysSepEnd3(index)],[zsSepInit3(i) zsSepEnd3(index)]);
+    sepResult3(index) = 40;
+    i = i + 1;
+end
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+xsSepInit4 = [];
+ysSepInit4 = [];
+zsSepInit4 = [];
+i = 96;
+j = 1;
+while j <= 25
+    xsSepInit4(j) = xs2(i);
+    ysSepInit4(j) = ys2(i);
+    zsSepInit4(j) = zs2(i);
+    if mod(j,5) == 0
+        i = i - 15;
+    end
+    i = i + 1;
+    j = j + 1;
+
+end
+
+
+
+xsSepEnd4 = [];
+ysSepEnd4 = [];
+zsSepEnd4 = [];
+i = 1;
+j = 1;
+while i <= 100
+    if ys(i) >= 0 && xs(i) > 0
+        xsSepEnd4(j) = xs(i);
+        ysSepEnd4(j) = ys(i);
+        zsSepEnd4(j) = zs(i);
+        j = j + 1;
+    end
+    i = i + 1;
+end
+
+length(xsSepEnd4)
+
+
+sepResult4 = [];
+i = 1;
+j = 1;
+index = 1;
+
+while i <= 25
+    j = 1;
+    while j <= 25
+        if (i ~= 1) && sepResult4(j) == 40
+            j = j + 1;
+        else
+            sepResult4(j) = sqrt((-(xsSepInit4(i)) + (xsSepEnd4(j))));
+            j = j + 1;
+        end
+    end
+    [maxr,index] = min(sepResult4);
+%     plot3([xsSepInit4(i) xsSepEnd4(index)],[ysSepInit4(i) ysSepEnd4(index)],[zsSepInit4(i) zsSepEnd4(index)]);
+    sepResult4(index) = 40;
+    i = i + 1;
+end
+
+
+
+hold off
+
+</code></pre>
+
+<h2>
+    Dragon
+</h2>
+<h4>
+    1.
+</h4>
+<pre><code>
+    clear all;
+clc;
+
+b = 1;
+hold on
+i = 1;
+while i < 8
+t = (5/12)*(3/2).^i*(-(1/3)*(-1).^i - (5/3)):0.0001:(5/12)*(3/2).^i*(-(1/3)*(-1).^i + (5/3));
+x = t;
+y = sqrt(-(24/25)*(t.^2) - (4/15)*(((-(3/2)).^i)*b*t) + (4/9)*(3/2).^(2*i));
+z = -sqrt((1/25)*(t.^2) - (4/15)*(((-(3/2)).^i)*b*t) + (4/9)*(3/2).^(2*i));
+plot3(x,y,z);
+i = i + 1;
+t = (5/12)*(3/2).^i*(-(1/3)*(-1).^i - (5/3)):0.0001:(5/12)*(3/2).^i*(-(1/3)*(-1).^i + (5/3));
+x = t;
+y = -sqrt(-(24/25)*(t.^2) - (4/15)*(((-(3/2)).^i)*b*t) + (4/9)*(3/2).^(2*i));
+z = -sqrt((1/25)*(t.^2) - (4/15)*(((-(3/2)).^i)*b*t) + (4/9)*(3/2).^(2*i));
+i = i + 1;
+plot3(x,y,z);
+grid on;
+end
+hold off
+
+</code></pre>
+<h4>
+    2.
+</h4>
+<pre><code>
+    clear all;
+clc;
+
+
+b = 1;
+height = 10;
+hold on
+xlabel('x(10m)')
+ylabel('y(10m)')
+zlabel('z(10m)')
+
+recX = [];
+recY = [];
+recZ = [];
+
+initDistance = 0.15;
+index = 1;
+j = 1;
+k = 1;
+while j <= 10
+
+    recX(index) = -3;
+    y = -4 + 0.2 * j;
+    recY(index) = -4 + 0.2 * j;
+    recZ(index) = -20;
+    while k < 5
+        index = index + 1;
+        recX(index) = recX(index-1) + initDistance;
+        recY(index) = y;
+        recZ(index) = -20;
+        k = k + 1;
+    end
+    index = index + 1;
+    k = 1;
+    j = j + 1;
+end
+
+
+
+i = 1;
+while i < 6
+t = (5/12)*(3/2).^i*(-(1/3)*(-1).^i - (5/3)):0.0001:(5/12)*(3/2).^i*(-(1/3)*(-1).^i + (5/3));
+x = t;
+y = sqrt(-(24/25)*(t.^2) - (4/15)*(((-(3/2)).^i)*b*t) + (4/9)*(3/2).^(2*i));
+z = -sqrt((1/25)*(t.^2) - (4/15)*(((-(3/2)).^i)*b*t) + (4/9)*(3/2).^(2*i));
+plot3(x,y,z);
+i = i + 1;
+t = (5/12)*(3/2).^i*(-(1/3)*(-1).^i - (5/3)):0.0001:(5/12)*(3/2).^i*(-(1/3)*(-1).^i + (5/3));
+x = t;
+y = -sqrt(-(24/25)*(t.^2) - (4/15)*(((-(3/2)).^i)*b*t) + (4/9)*(3/2).^(2*i));
+z = -sqrt((1/25)*(t.^2) - (4/15)*(((-(3/2)).^i)*b*t) + (4/9)*(3/2).^(2*i));
+i = i + 1;
+plot3(x,y,z);
+grid on;
+end
+
+
+
+k = 1;
+i = 1;
+zz = 1;
+xsC = [];
+ysC = [];
+zsC = [];
+total = 50;
+distance = 0.3;
+totalDistance = 0;
+j = (5/12)*(3/2)^i*(-(1/3)*(-1)^i - (5/3));
+
+xs = [j];
+ys = [sqrt(-(24/25)*(j^2) - (4/15)*(((-(3/2))^i)*b*j) + (4/9)*(3/2)^(2*i))];
+zs = [-sqrt((1/25)*(j^2) - (4/15)*(((-(3/2))^i)*b*j) + (4/9)*(3/2)^(2*i))];
+xsC(1) = xs(1);
+ysC(1) = ys(1);
+zsC(1) = zs(1);
+
+while j < (5/12)*(3/2)^i*(-(1/3)*(-1)^i + (5/3))
+    j = j + 0.0001;
+    x = j;
+    y = sqrt(-(24/25)*(j^2) - (4/15)*(((-(3/2))^i)*b*j) + (4/9)*(3/2)^(2*i));
+    z = -sqrt((1/25)*(j^2) - (4/15)*(((-(3/2))^i)*b*j) + (4/9)*(3/2)^(2*i));
+    DT = sqrt((x - xs(k))^2 + (y - ys(k))^2 + (z - zs(k))^2);
+    D = sqrt((x - xsC(zz))^2 + (y - ysC(zz))^2 + (z - zsC(zz))^2);
+    zz = zz + 1;
+    xsC(zz) = x;
+    ysC(zz) = y;
+    zsC(zz) = z;
+    totalDistance = totalDistance + D;
+    if distance <= DT
+        k = k + 1;
+        xs(k) = x;
+        ys(k) = y;
+        zs(k) = z;
+    end
+end
+
+real(totalDistance)
+24.84 + 16.5653 + 11.0436 + 7.3624 + 4.9082 + 3.2722
+
+fXsInit = [];
+fYsInit = [];
+fZsInit = [];
+i = 50;
+j = 1;
+while i >= 1
+    fXsInit(j) = recX(i);
+    fYsInit(j) = recY(i);
+    fZsInit(j) = recZ(i);
+    i = i - 1;
+    j = j + 1;
+end
+
+fXsInit2 = [];
+fYsInit2 = [];
+fZsInit2 = [];
+i = 36;
+j = 1;
+while j <= 40
+    fXsInit2(j) = recX(i);
+    fYsInit2(j) = recY(i);
+    fZsInit2(j) = recZ(i);
+    if mod(j,5) == 0
+        i = i - 10;
+    end
+    i = i + 1;
+    j = j + 1;
+end
+
+
+
+i = 1;
+while i <= 50;
+    if i <= 10
+    plot3([fXsInit(i) xs(i)],[fYsInit(i) ys(i)],[fZsInit(i) zs(i)]);
+    else
+    plot3([fXsInit2(i-10) xs(i)],[fYsInit2(i-10) ys(i)],[fZsInit2(i-10) zs(i)]);
+    end
+    i = i + 1;
+end
+
+
+scatter3(xs,ys,zs);
+scatter3(recX,recY,recZ);
+% scatter3(xs2,ys2,zs2);
+hold off
+
+</code></pre>
+<h2>
+    Firework
+</h2>
+<h4>
+    1.
+</h4>
+<pre><code>
+syms x y z;
+A = [0.7,-0.7;0.7,0.7];
+i = 1;
+total = 16;
+height = 0;
+distance = 0.15;
+l = 2.5;
+L = 5;
+
+xsInit = [];
+ysInit = [];
+zsInit = [];
+xs = [];
+ys = [];
+zs = [];
+
+hold on
+
+
+
+while i <= total
+z1 = height;
+x1 = distance*(i-1);
+% xsInit(i) = x1;
+% ysInit(i) = 0;
+% zsInit(i) = z1;
+z = height + x1*0.7;
+x = x1*0.7;
+y = 0;
+xs(i) = x;
+ys(i) = y;
+zs(i) = z;
+% plot3([xsInit(i) xs(i)],[ysInit(i) ys(i)],[zsInit(i) zs(i)]);
+i = i + 1;
+end
+
+
+xs2 = [];
+ys2 = [];
+zs2 = [];
+i = 0;
+m = 100;
+% t = 2;
+while i < 8
+    co = [rand,rand,rand];
+    ys2(i+1) = ys(2*i+1) + cos(0.25*pi*i)*L;
+    xs2(i+1) = 0.7*xs(2*i+1)-0.7*zs(2*i+1)-0.7*sin(0.25*pi*i)*L;
+    zs2(i+1) = 0.7*xs(2*i+1)+0.7*zs(2*i+1)+0.7*sin(0.25*pi*i)*L;
+    t = 0:0.01:5;
+        xF = xs2(i+1)+(-0.3*xs(2*i+1)-0.7*zs(2*i+1)-0.7*sin(0.25*pi*i)*L) * (1*t);
+        yF = ys2(i+1)+(cos(0.25*pi*i)*L) * (1*t);
+        zF = zs2(i+1)+(0.7*xs(2*i+1)-0.3*zs(2*i+1)+0.7*sin(0.25*pi*i)*L) * (1*t) - 0.5*0.98*m*(t.^2);
+         plot3(xF,yF,zF,'color',co);
+        grid on
+
+
+ plot3([xs(2*i + 1) xs2(i+1)],[ys(2*i + 1) ys2(i+1)],[zs(2*i + 1) zs2(i+1)],'color',co);
+    i = i+1;
+end
+
+
+xs3 = [];
+ys3 = [];
+zs3 = [];
+i = 1;
+while i <= 8
+    co = [rand,rand,rand];
+    xs3(i) = 0.7*xs(2*i) - 0.7*zs(2*i) - 0.7*sin(0.125*pi + 0.25*pi*i)*l;
+    ys3(i) = ys(2*i) + cos(0.125*pi + 0.25*pi*i)*l;
+    zs3(i) = 0.7*xs(2*i)+0.7*zs(2*i)+0.7*sin(0.125*pi + 0.25*pi*i)*l;
+        t = 0:0.01:5;
+        xF = xs3(i)+(-0.3*xs(2*i)-0.7*zs(2*i)-0.7*sin(0.25*pi*i)*L) * (1*t);
+        yF = ys3(i)+(cos(0.25*pi*i)*L) * (1*t);
+        zF = zs3(i)+(0.7*xs(2*i)-0.3*zs(2*i)+0.7*sin(0.25*pi*i)*L) * (1*t) - 0.5*0.98*m*(t.^2);
+         plot3(xF,yF,zF,'color',co);
+        grid on
+      plot3([xs(2*i) xs3(i)],[ys(2*i) ys3(i)],[zs(2*i) zs3(i)],'color',co)
+    i = i+1;
+end
+
+
+
+xlabel('x(10m)')
+ylabel('y(10m)')
+zlabel('z(10m)')
+% scatter3(xsInit,ysInit,zsInit);
+scatter3(xs,ys,zs)
+scatter3(xs2,ys2,zs2)
+% scatter3(xs3,ys3,zs3)
+axis([-8 8 -8 8 -8 8])
+hold off
+
+</code></pre>
+<h4>
+    2.
+</h4>
+<pre><code>
+    syms x y z;
+A = [0.7,-0.7;0.7,0.7];
+i = 1;
+total = 16;
+height = 10;
+radius = height*sqrt(2);
+minusX = radius*cos(0.25*pi);
+minusZ = radius*sin(0.25*pi);
+distance = 0.15;
+l = 2.5;
+L = 5;
+
+xsInit = [];
+ysInit = [];
+zsInit = [];
+xs = [];
+ys = [];
+zs = [];
+
+hold on
+radius = height*sqrt(2);
+distance = 0.15;
+
+i = 0;
+while i < total
+
+theta = 0:0.001:0.25*pi;
+xT = radius*cos(theta) - height;
+yT = 0*theta;
+zT = radius*sin(theta) - height;
+xsInit(i+1) = radius*cos(0) - height;
+ysInit(i+1) = 0;
+zsInit(i+1) = radius*sin(0) - height;
+plot3(xT,yT,zT);
+radius = radius + distance;
+i = i + 1;
+end
+
+i = 1;
+while i <= total
+z1 = 0;
+x1 = distance*(i-1);
+z = 0 + x1*0.7;
+x = x1*0.7;
+y = 0;
+xs(i) = x;
+ys(i) = y;
+zs(i) = z;
+% plot3([xsInit(i) xs(i)],[ysInit(i) ys(i)],[zsInit(i) zs(i)]);
+i = i + 1;
+end
+
+
+xs2 = [];
+ys2 = [];
+zs2 = [];
+i = 0;
+m = 100;
+% t = 2;
+while i < 8
+    co = [rand,rand,rand];
+    ys2(i+1) = ys(2*i+1) + cos(0.25*pi*i)*L;
+    xs2(i+1) = 0.7*xs(2*i+1)-0.7*zs(2*i+1)-0.7*sin(0.25*pi*i)*L;
+    zs2(i+1) = 0.7*xs(2*i+1)+0.7*zs(2*i+1)+0.7*sin(0.25*pi*i)*L;
+    t = 0:0.01:5;
+        xF = xs2(i+1)+(-0.3*xs(2*i+1)-0.7*zs(2*i+1)-0.7*sin(0.25*pi*i)*L) * (1*t);
+        yF = ys2(i+1)+(cos(0.25*pi*i)*L) * (1*t);
+        zF = zs2(i+1)+(0.7*xs(2*i+1)-0.3*zs(2*i+1)+0.7*sin(0.25*pi*i)*L) * (1*t) - 0.5*0.98*m*(t.^2);
+%          plot3(xF,yF,zF,'color',co);
+        grid on
+
+
+%  plot3([xs(2*i + 1) xs2(i+1)],[ys(2*i + 1) ys2(i+1)],[zs(2*i + 1) zs2(i+1)],'color',co);
+    i = i+1;
+end
+
+
+xs3 = [];
+ys3 = [];
+zs3 = [];
+i = 1;
+while i <= 8
+    co = [rand,rand,rand];
+    xs3(i) = 0.7*xs(2*i) - 0.7*zs(2*i) - 0.7*sin(0.125*pi + 0.25*pi*i)*l;
+    ys3(i) = ys(2*i) + cos(0.125*pi + 0.25*pi*i)*l;
+    zs3(i) = 0.7*xs(2*i)+0.7*zs(2*i)+0.7*sin(0.125*pi + 0.25*pi*i)*l;
+        t = 0:0.01:5;
+        xF = xs3(i)+(-0.3*xs(2*i)-0.7*zs(2*i)-0.7*sin(0.25*pi*i)*L) * (1*t);
+        yF = ys3(i)+(cos(0.25*pi*i)*L) * (1*t);
+        zF = zs3(i)+(0.7*xs(2*i)-0.3*zs(2*i)+0.7*sin(0.25*pi*i)*L) * (1*t) - 0.5*0.98*m*(t.^2);
+%          plot3(xF,yF,zF,'color',co);
+        grid on
+%       plot3([xs(2*i) xs3(i)],[ys(2*i) ys3(i)],[zs(2*i) zs3(i)],'color',co)
+    i = i+1;
+end
+
+
+
+xlabel('x(10m)')
+ylabel('y(10m)')
+zlabel('z(10m)')
+scatter3(xsInit,ysInit,zsInit);
+scatter3(xs,ys,zs)
+% scatter3(xs2,ys2,zs2)
+% scatter3(xs3,ys3,zs3)
+axis([-10 10 -10 10 -10 10])
+hold off
+
+</code></pre>
+<h4>
+    3.
+</h4>
+<pre><code>
+    syms x y z;
+A = [(1/sqrt(2)),-(1/sqrt(2));(1/sqrt(2)),(1/sqrt(2))];
+i = 1;
+total = 16;
+height = 10;
+radius = height*sqrt(2);
+minusX = radius*cos(0.25*pi);
+minusZ = radius*sin(0.25*pi);
+distance = 0.15;
+l = 2.5;
+L = 5;
+
+xsInit = [];
+ysInit = [];
+zsInit = [];
+xs = [];
+ys = [];
+zs = [];
+
+hold on
+
+
+
+
+radius = height*sqrt(2);
+distance = 0.15;
+
+i = 0;
+while i < total
+
+theta = 0:0.001:0.25*pi;
+xT = radius*cos(theta) - height;
+yT = 0*theta;
+zT = radius*sin(theta) - height;
+xsInit(i+1) = radius*cos(0) - height;
+ysInit(i+1) = 0;
+zsInit(i+1) = radius*sin(0) - height;
+ plot3(xT,yT,zT);
+radius = radius + distance;
+i = i + 1;
+end
+
+i = 1;
+while i <= total
+z1 = 0;
+x1 = distance*(i-1);
+z = 0 + x1*(1/sqrt(2));
+x = x1*(1/sqrt(2));
+y = 0;
+xs(i) = x;
+ys(i) = y;
+zs(i) = z;
+% plot3([xsInit(i) xs(i)],[ysInit(i) ys(i)],[zsInit(i) zs(i)]);
+i = i + 1;
+end
+
+
+xs2 = [];
+ys2 = [];
+zs2 = [];
+i = 0;
+m = 100;
+% t = 2;
+while i < 8
+    co = [rand,rand,rand];
+    ys2(i+1) = ys(2*i+1) + cos(0.25*pi*i)*L;
+    xs2(i+1) = (1/sqrt(2))*xs(2*i+1)-(1/sqrt(2))*zs(2*i+1)-(1/sqrt(2))*sin(0.25*pi*i)*L;
+    zs2(i+1) = (1/sqrt(2))*xs(2*i+1)+(1/sqrt(2))*zs(2*i+1)+(1/sqrt(2))*sin(0.25*pi*i)*L;
+    t = 0:0.01:5;
+        xF = xs2(i+1)+(-0.3*xs(2*i+1)-(1/sqrt(2))*zs(2*i+1)-(1/sqrt(2))*sin(0.25*pi*i)*L) * (1*t);
+        yF = ys2(i+1)+(cos(0.25*pi*i)*L) * (1*t);
+        zF = zs2(i+1)+((1/sqrt(2))*xs(2*i+1)-0.3*zs(2*i+1)+(1/sqrt(2))*sin(0.25*pi*i)*L) * (1*t) - 0.5*0.98*m*(t.^2);
+          plot3(xF,yF,zF,'color',co);
+        grid on
+
+
+  plot3([xs(2*i + 1) xs2(i+1)],[ys(2*i + 1) ys2(i+1)],[zs(2*i + 1) zs2(i+1)],'color',co);
+    i = i+1;
+end
+
+
+xs3 = [];
+ys3 = [];
+zs3 = [];
+i = 1;
+while i <= 8
+    co = [rand,rand,rand];
+    xs3(i) = (1/sqrt(2))*xs(2*i) - (1/sqrt(2))*zs(2*i) - (1/sqrt(2))*sin(0.125*pi + 0.25*pi*i)*l;
+    ys3(i) = ys(2*i) + cos(0.125*pi + 0.25*pi*i)*l;
+    zs3(i) = (1/sqrt(2))*xs(2*i)+(1/sqrt(2))*zs(2*i)+(1/sqrt(2))*sin(0.125*pi + 0.25*pi*i)*l;
+        t = 0:0.01:5;
+        xF = xs3(i)+(-0.3*xs(2*i)-(1/sqrt(2))*zs(2*i)-(1/sqrt(2))*sin(0.125*pi + 0.25*pi*i)*l) * (1*t);
+        yF = ys3(i)+(cos(0.125*pi + 0.25*pi*i)*l) * (1*t);
+        zF = zs3(i)+((1/sqrt(2))*xs(2*i)-0.3*zs(2*i)+(1/sqrt(2))*sin(0.125*pi + 0.25*pi*i)*l) * (1*t) - 0.5*0.98*m*(t.^2);
+          plot3(xF,yF,zF,'color',co);
+        grid on
+       plot3([xs(2*i) xs3(i)],[ys(2*i) ys3(i)],[zs(2*i) zs3(i)],'color',co)
+    i = i+1;
+end
+
+
+
+xlabel('x(10m)')
+ylabel('y(10m)')
+zlabel('z(10m)')
+scatter3(xsInit,ysInit,zsInit);
+scatter3(xs,ys,zs)
+ scatter3(xs2,ys2,zs2)
+ scatter3(xs3,ys3,zs3)
+axis([-10 10 -10 10 -10 10])
+hold off
+
+</code></pre>
+<h2>
+    Python
+</h2>
+<pre><code>
+import math
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+xs = []
+ys = []
+zs = []
+i = 0
+while i < 20:
+    xs.append(i)
+    ys.append(i)
+    zs.append(i*i)
+def three_d_circle(x,y,r):
+    i = 0
+    first = -r
+    while first < r:
+        ys.append(0)
+        xs.append(first+x)
+        zs.append(math.sqrt(r*r - first*first)+y)
+        ys.append(0)
+        xs.append(first+x)
+        zs.append(-math.sqrt(r*r - first*first)+y)
+        first = first + 0.2
+
+three_d_circle(0,0,10)
+three_d_circle(0,0,8)
+three_d_circle(0,0,2)
+
+ax = plt.figure().add_subplot(111, projection = '3d')
+ax.scatter(xs, ys, zs, c = 'r', marker = '^') #points are triangle
+
+ax.set_xlabel('X Label')
+ax.set_ylabel('Y Label')
+ax.set_zlabel('Z Label')
+
+
+#plot now
+plt.show()
+</code></pre>
+</body>
+</html>
